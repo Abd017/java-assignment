@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- AUTHORS -->
+	<bean name="author1" class="com.epsilon.bookstore.Author">
+		<property name="authorId" value="101" />
+		<property name="authorName" value="Dan Brown" />
+	</bean>
+
+	<bean name="author2" class="com.epsilon.bookstore.Author"
+		c:authorId="102" c:authorName="Morgan Housel" />
+
+	<!-- PUBLISHERS -->
+	<bean name="publisher1" class="com.epsilon.bookstore.Publisher">
+		<property name="publisherId" value="201" />
+		<property name="publisherName" value="ABC Publishers" />
+		<property name="publisherLocation" value="London, UK" />
+	</bean>
+
+	<bean name="publisher2" class="com.epsilon.bookstore.Publisher"
+		c:publisherId="202" c:publisherName="DEF Publishers"
+		c:publisherLocation="New York, USA" />
+
+	<!-- BOOKS -->
+	<bean name="book1" class="com.epsilon.bookstore.Book">
+		<property name="bookId" value="301" />
+		<property name="bookName" value="The Da Vinci Code" />
+		<property name="author">
+			<ref bean="author1" />
+		</property>
+		<property name="publisher">
+			<ref bean="publisher1" />
+		</property>
+		<property name="price" value="499.00" />
+	</bean>
+
+	<bean name="book2" class="com.epsilon.bookstore.Book">
+		<property name="bookId" value="302" />
+		<property name="bookName" value="Inferno" />
+		<property name="author">
+			<ref bean="author1" />
+		</property>
+		<property name="publisher">
+			<ref bean="publisher1" />
+		</property>
+		<property name="price" value="449.00" />
+	</bean>
+
+	<bean name="book3" class="com.epsilon.bookstore.Book" c:bookId="303"
+		c:bookName="The Psychology of Money" c:author-ref="author2"
+		c:publisher-ref="publisher2" c:price="249.00" />
+
+
+	<!-- CUSTOMERS -->
+	<bean name="customer1" class="com.epsilon.bookstore.Customer">
+		<property name="customerId" value="401" />
+		<property name="customerName" value="Abdul Wahab" />
+	</bean>
+
+	<bean name="customer2" class="com.epsilon.bookstore.Customer"
+		c:customerId="402" c:customerName="Amit Kumar" />
+
+
+	<!-- ORDERS -->
+	<bean name="order1" class="com.epsilon.bookstore.Order">
+		<property name="orderId" value="501" />
+		<property name="customer">
+			<ref bean="customer1" />
+		</property>
+		<property name="orders">
+			<list>
+				<ref bean="book1" />
+				<ref bean="book2" />
+				<ref bean="book3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean name="order2" class="com.epsilon.bookstore.Order" c:orderId="502" c:customer-ref="customer2">
+		<constructor-arg>
+			<list>
+				<ref bean="book2" />
+				<ref bean="book3" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+
+</beans>
